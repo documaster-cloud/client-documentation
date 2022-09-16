@@ -1,2 +1,2 @@
-# client-onboarding
+# Client Onboarding
 Documentation for onboarding new clients
