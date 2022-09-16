@@ -16,8 +16,8 @@ The Documaster applications perform access control based on the groups a user is
 ### Create application
 
 Go to *Azure Active Directory → App registrations → New Application registration*
+![Skjermbilde 2022-09-16 kl  13 45 59](https://user-images.githubusercontent.com/1672128/190632150-fe67bac2-2cc3-47d8-9457-69ac817d5090.png)
 
-INSERT_IMAGE
 
 Create the new application:
 1. **Name:** Documaster (whatever would make it easy for you to distinguish the application)
