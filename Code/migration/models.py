@@ -3,7 +3,7 @@ from datetime import datetime
 from enum import Enum
 from typing import Any, Optional, Union
 
-from pydantic import BaseModel, Field, root_validator, validator
+from pydantic import BaseModel, Field, validator
 
 
 class AttributeTypes(Enum):
@@ -13,8 +13,8 @@ class AttributeTypes(Enum):
     numeric_list = "NumericList"
     date = "Date"
     date_list = "DateList"
-    datetime = "Date"
-    datetime_list = "DateList"
+    datetime = "DateTime"
+    datetime_list = "DateTimeList"
 
 
 class TitleBaseModel(BaseModel):
@@ -71,38 +71,46 @@ class Attribute(BaseModel):
         description="For the regular (not list) types, only a single value can be "
         "assigned to a entry, multiple values will result in a undefined result.",
     )
-    value: Union[datetime, date_type, int, float, str]
+    value: Union[int, float, datetime, date_type, str]
 
-    @root_validator
-    def type_value_validation(cls, values: dict[str, Any]) -> dict[str, Any]:
-        found_type = values.get("type", None)
-        if found_type is None:
-            raise ValueError('Requierd field "type" was not found or null')
+    @validator("value")
+    def type_value_validation(cls, value: Any, values: dict[str, Any]):
+        requierd_type = values.get("type", None)
+        if requierd_type is None:
+            return None
 
-        found_value = values.get("value", None)
-        if found_value is None:
+        if value is None:
             raise ValueError('Requierd field "value" was not found or null')
 
-        if found_type in [AttributeTypes.datetime, AttributeTypes.datetime_list]:
-            if not isinstance(found_value, datetime):
-                raise ValueError('Field value was not type "datetime"')
+        value_type = str(type(value).__name__)
+        if requierd_type in [AttributeTypes.datetime, AttributeTypes.datetime_list]:
+            if not isinstance(value, datetime):
+                raise TypeError(f'Field value was "{value_type}" not type "datetime"')
 
-        elif found_type in [AttributeTypes.date, AttributeTypes.date_list]:
-            if not isinstance(found_value, date_type):
-                raise ValueError('Field value was not type "date"')
+        elif requierd_type in [AttributeTypes.date, AttributeTypes.date_list]:
+            if isinstance(value, datetime):
+                value = value.date()
 
-        elif found_type in [AttributeTypes.numeric, AttributeTypes.numeric_list]:
-            if not isinstance(found_value, (int, float)):
-                raise ValueError('Field value was not type "int" or "float"')
+            if not isinstance(value, date_type):
+                raise TypeError(f'Field value was "{value_type}" not type "date"')
 
-        elif found_type in [AttributeTypes.string, AttributeTypes.string_list]:
-            if not isinstance(found_value, str):
-                raise ValueError('Field value was not type "string"')
+        elif requierd_type in [AttributeTypes.numeric, AttributeTypes.numeric_list]:
+            if not isinstance(value, (int, float)):
+                raise TypeError(
+                    f'Field value was "{value_type}" not type "int" or "float"'
+                )
+
+        elif requierd_type in [AttributeTypes.string, AttributeTypes.string_list]:
+            if isinstance(value, (str, int, float)):
+                value = str(value)
+
+            if not isinstance(value, str):
+                raise TypeError(f'Field value was "{value_type}" not type "str"')
 
         else:
-            raise ValueError(f'Field value was type "{type(found_value)!s}')
+            raise TypeError(f'Field value was type "{value_type}"')
 
-        return values
+        return value
 
     def __hash__(self) -> int:
         if self.type in [
