@@ -91,6 +91,9 @@ class Attribute(BaseModel):
 
         return values
 
+    def __hash__(self) -> int:
+        return self.name.__hash__()
+
     class Config:
         extra = "forbid"
 
@@ -98,6 +101,9 @@ class Attribute(BaseModel):
 class Tag(BaseModel):
     title: str
     entry_attributes: set[Attribute] = Field(default_factory=set)
+
+    def __hash__(self) -> int:
+        return self.title.__hash__()
 
     class Config:
         extra = "forbid"
