@@ -26,6 +26,9 @@ class TitleBaseModel(BaseModel):
             return None
         return value
 
+    def __hash__(self) -> int:
+        return (self.title or "").__hash__()
+
 
 class Entry(TitleBaseModel):
     date: Optional[date_type] = None
@@ -34,6 +37,13 @@ class Entry(TitleBaseModel):
         description="Used to create multiple Entries with the same title, "
         "e.g. when using empty titles for all entries.",
     )
+
+    def __hash__(self) -> int:
+        return (
+            super().__hash__()
+            ^ (self.date or "").__hash__()
+            ^ (self.namespace or "").__hash__()
+        )
 
     class Config:
         extra = "forbid"
@@ -46,6 +56,9 @@ class Document(TitleBaseModel):
         "We recommend using the original filename in this field, enabeling re-usage "
         'of document titles "combinations" e.g. pdf/docx.',
     )
+
+    def __hash__(self) -> int:
+        return super().__hash__() ^ (self.namespace or "").__hash__()
 
     class Config:
         extra = "forbid"
@@ -92,7 +105,15 @@ class Attribute(BaseModel):
         return values
 
     def __hash__(self) -> int:
-        return self.name.__hash__()
+        if self.type in [
+            AttributeTypes.date,
+            AttributeTypes.datetime,
+            AttributeTypes.numeric,
+            AttributeTypes.string,
+        ]:
+            return self.name.__hash__() ^ self.type.__hash__()
+
+        return self.name.__hash__() ^ self.type.__hash__() ^ self.value.__hash__()
 
     class Config:
         extra = "forbid"
