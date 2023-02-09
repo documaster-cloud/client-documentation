@@ -147,6 +147,10 @@ class FileImportModel(BaseModel):
         default=None,
         description="Replaces the file **name** which will be shown on documentVersion.",
     )
+    file_datetime: Optional[datetime] = Field(
+        default=None,
+        description="Replaces **created** on documentVersion.", 
+    )
     document: Optional[Document] = Field(
         default=None,
     )

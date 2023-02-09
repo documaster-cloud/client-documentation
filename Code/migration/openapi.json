@@ -116,6 +116,12 @@
                         "type": "string",
                         "description": "Replaces the file **name** which will be shown on documentVersion."
                     },
+                    "file_datetime": {
+                        "title": "File Datetime",
+                        "description": "Replaces **created** on documentVersion.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
                     "document": {
                         "$ref": "#/components/schemas/Document"
                     },
