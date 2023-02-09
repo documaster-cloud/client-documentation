@@ -1,0 +1,47 @@
+{
+  "section": "Section name",
+  "file_datetime": "2019-08-24T14:15:22Z",
+  "document": {
+    "title": "filename without suffix and underscores",
+    "namespace": "original_filename.pdf"
+  },
+  "entry": {
+    "date": "2023-01-24",
+    "namespace": "pdf group"
+  },
+  "classification_tags": {
+    "Documenttyp": [
+      {
+        "title": "Document events",
+        "entry_attributes": [
+          {
+            "name": "Document event",
+            "type": "DateTime",
+            "value": "2019-08-24T14:15:22Z"
+          },
+          {
+            "name": "External id",
+            "type": "Numeric",
+            "value": "200"
+          },
+          {
+            "name": "Stringtest",
+            "type": "StringList",
+            "value": "String item 1"
+          },
+          {
+            "name": "Changelog",
+            "type": "DateList",
+            "value": "2019-08-24"
+          },
+          {
+            "name": "Changelog",
+            "type": "DateList",
+            "value": "2019-08-23"
+          }
+        ]
+      }
+    ]
+}}
+
+

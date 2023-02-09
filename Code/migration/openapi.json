@@ -1,0 +1,170 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Documaser Single Document Schemas",
+        "version": "0.1.0"
+    },
+    "paths": {},
+    "components": {
+        "schemas": {
+            "Attribute": {
+                "title": "Attribute",
+                "required": [
+                    "name",
+                    "type",
+                    "value"
+                ],
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "title": "Name",
+                        "type": "string"
+                    },
+                    "type": {
+                        "allOf": [
+                            {
+                                "$ref": "#/components/schemas/AttributeTypes"
+                            }
+                        ],
+                        "description": "For the regular (not list) types, only a single value can be assigned to a entry, multiple values will result in a undefined result."
+                    },
+                    "value": {
+                        "title": "Value",
+                        "anyOf": [
+                            {
+                                "type": "string",
+                                "format": "date-time"
+                            },
+                            {
+                                "type": "string",
+                                "format": "date"
+                            },
+                            {
+                                "type": "integer"
+                            },
+                            {
+                                "type": "number"
+                            },
+                            {
+                                "type": "string"
+                            }
+                        ]
+                    }
+                },
+                "additionalProperties": false
+            },
+            "AttributeTypes": {
+                "title": "AttributeTypes",
+                "enum": [
+                    "String",
+                    "StringList",
+                    "Numeric",
+                    "NumericList",
+                    "Date",
+                    "DateList"
+                ],
+                "description": "An enumeration."
+            },
+            "Document": {
+                "title": "Document",
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "title": "Title",
+                        "type": "string"
+                    },
+                    "namespace": {
+                        "title": "Namespace",
+                        "type": "string",
+                        "description": "Used to create multiple Documents with the same title. We recommend using the original filename in this field, enabeling re-usage of document titles \"combinations\" e.g. pdf/docx."
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Entry": {
+                "title": "Entry",
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "title": "Title",
+                        "type": "string"
+                    },
+                    "date": {
+                        "title": "Date",
+                        "type": "string",
+                        "format": "date"
+                    },
+                    "namespace": {
+                        "title": "Namespace",
+                        "type": "string",
+                        "description": "Used to create multiple Entries with the same title, e.g. when using empty titles for all entries."
+                    }
+                },
+                "additionalProperties": false
+            },
+            "FileImportModel": {
+                "title": "FileImportModel",
+                "type": "object",
+                "properties": {
+                    "section": {
+                        "title": "Section",
+                        "type": "string",
+                        "description": "Excplisitly find/set the *title* of the section."
+                    },
+                    "file_name": {
+                        "title": "File Name",
+                        "type": "string",
+                        "description": "Replaces the file **name** which will be shown on documentVersion."
+                    },
+                    "file_datetime": {
+                        "title": "File Datetime",
+                        "description": "Replaces **created** on documentVersion.",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "document": {
+                        "$ref": "#/components/schemas/Document"
+                    },
+                    "entry": {
+                        "$ref": "#/components/schemas/Entry"
+                    },
+                    "classification_tags": {
+                        "title": "Classification Tags",
+                        "type": "object",
+                        "additionalProperties": {
+                            "uniqueItems": true,
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/components/schemas/Tag"
+                            }
+                        },
+                        "description": "Entries get grouped, i.e. unless separated by entry-namespace tags will be merged onto entries with the same section & entry-title."
+                    }
+                },
+                "additionalProperties": false
+            },
+            "Tag": {
+                "title": "Tag",
+                "required": [
+                    "title"
+                ],
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "title": "Title",
+                        "type": "string"
+                    },
+                    "entry_attributes": {
+                        "title": "Entry Attributes",
+                        "uniqueItems": true,
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Attribute"
+                        }
+                    }
+                },
+                "additionalProperties": false
+            }
+        }
+    }
+}
