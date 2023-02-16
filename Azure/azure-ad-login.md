@@ -12,9 +12,9 @@ Go to *Azure Active Directory → App registrations → New Application registra
 <img width="1105" alt="new-app-1" src="https://user-images.githubusercontent.com/40164824/215485412-a05bd67a-f605-4c8f-bb77-4f5b5f0d6718.png">
 
 #### Create the new application with the following information:
-1. **Name:** `Your chosen name`
+1. **Name:** `Your chosen application name`
 2. **Application type:** Web
-3. **Redirect URI:** `https://<CUSTOMER_NAME>.documaster.com/login` (e.g. if your company name is "Example" it would be `https://example.documaster.com/login`)
+3. **Redirect URI:** `https://<CUSTOMER_NAME>.documaster.cloud/login` (e.g. if your company name is "Example" it would be `https://example.documaster.cloud/login`)
 4. Click Register
 
 <img width="830" alt="new-app-2" src="https://user-images.githubusercontent.com/40164824/215747489-543fc4db-1aba-4038-b4e8-f9b5a4f38fbd.png">
@@ -78,9 +78,9 @@ Inside your newly created App registration, go to *API permissions → Add a per
 ### **Add login and logout URLs**
 Inside your newly created App registration, go to *Authentication* 
 
-→ Under the Redirect URIs add `https://<NAME>.documaster.cloud/login`, `https://<NAME>.documaster.cloud/bff/login`, `https://<NAME>.documaster.com/bff/login` 
+→ Under the Redirect URIs add `https://<NAME>.documaster.cloud/bff/login`
 
-→ Under Logout URL add `https://<NAME>.documaster.com/logout` 
+→ Under Logout URL add `https://<NAME>.documaster.cloud/logout` 
 
 → Save
 
