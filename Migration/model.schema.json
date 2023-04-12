@@ -1,0 +1,118 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "$id": "https://migration.documaster.cloud/model.schema.json",
+    "description": "Describes how a single file should be added to Documaster",
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["section"],
+    "properties": {
+        "file_datetime": {
+            "type": "string",
+            "format": "date-time",
+            "description": "If given, replaces the default **createdDate** field of the document version."
+        },
+        "section": {
+            "type": "string",
+            "description": "Title of the section where the document should be added.",
+            "minLength": 1
+        },
+        "document": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["title", "namespace"],
+            "properties": {
+                "title": {
+                    "type": "string",
+                    "minLength": 1
+                },
+                "namespace": {
+                    "type": "string",
+                    "minLength": 1
+                }
+            }
+        },
+        "entry": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["date", "namespace"],
+            "properties": {
+                "date": {
+                    "type": "string",
+                    "format": "date",
+                    "description": "If given, replaces the default **createdDate** field of the entry."
+                },
+                "namespace": {
+                    "type": "string",
+                    "minLength": 1,
+                    "description": "Used to create multiple Entries with the same title, e.g. when using empty titles for all entries."
+                }
+            }
+        },
+        "classification_tags": {
+            "type": "object",
+            "additionalProperties": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                    "type":"object",
+                    "required": ["title"],
+                    "properties":{
+                        "title": {
+                            "type": "string",
+                            "minLength": 1
+                        },
+                        "entry_attributes": {
+                            "type": "array",
+                            "items": {
+                                "type": "object",
+                                "uniqueItems": true,
+                                "additionalProperties": false,
+                                "required": ["name", "type", "value"],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "minLength": 1
+                                    },
+                                    "value": {
+                                        "type": "string",
+                                        "minLength": 1
+                                    },
+                                    "type": {
+                                        "type": "string",
+                                        "enum": [
+                                            "String",
+                                            "StringList",
+                                            "Numeric",
+                                            "NumericList",
+                                            "Date",
+                                            "DateList",
+                                            "DateTime"
+                                        ]
+                                    }
+                                },
+                                "allOf": [
+                                    {
+                                        "if": {
+                                            "properties": { "type": { "enum": ["Date", "DateList"] }}
+                                        },
+                                        "then": { 
+                                            "properties": { "value": { "format": "date" }}
+                                        }
+                                    },
+                                    {
+                                        "if": {
+                                            "properties": { "type": { "const": "DateTime" }}
+                                        },
+                                        "then": {
+                                            "properties": { "value": { "format": "date-time" }}
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

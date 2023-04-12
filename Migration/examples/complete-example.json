@@ -1,0 +1,61 @@
+{
+    "section": "Section name",
+    "file_datetime": "2019-08-24T14:15:22Z",
+    "document": {
+        "title": "filename without suffix and underscores",
+        "namespace": "original_filename.pdf"
+    },
+    "entry": {
+        "date": "2023-01-24",
+        "namespace": "pdf group"
+    },
+    "classification_tags": {
+        "Customer": [
+            {
+                "title": "Santa Claus"
+            }
+        ],
+        "Document Type": [
+            {
+                "title": "Order",
+                "entry_attributes": [
+                    {
+                        "name": "Annual value",
+                        "type": "Numeric",
+                        "value": "2000"
+                    },
+                    {
+                        "name": "Changelog",
+                        "type": "DateList",
+                        "value": "2019-08-24"
+                    },
+                    {
+                        "name": "Changelog",
+                        "type": "DateList",
+                        "value": "2019-08-23"
+                    }
+                ]
+            },
+            {
+                "title": "Contract",
+                "entry_attributes": [
+                    {
+                        "name": "Expiry date",
+                        "type": "DateTime",
+                        "value": "2019-08-24T14:15:22Z"
+                    },
+                    {
+                        "name": "Followed up by",
+                        "type": "StringList",
+                        "value": "Lawyer 1"
+                    },
+                    {
+                        "name": "Followed up by",
+                        "type": "StringList",
+                        "value": "Lawyer 2"
+                    }
+                ]
+            }
+        ]
+    }
+}
