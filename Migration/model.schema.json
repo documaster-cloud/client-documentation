@@ -67,7 +67,7 @@
                 "namespace": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "If given, the namespace determines how documents should be grouped (one group will be displayed in a single Entry). Files with the same 'entry.namespace' and 'section' will be grouped together. If you want the file to be shown as a separate Entry, do not provide this field. Note that this field will not be displayd in the UI, as it is only used to determine the grouping.",
+                    "description": "If given, the namespace determines how documents should be grouped (one group will be displayed as a single Entry). Files with the same 'entry.namespace' and 'section' will be grouped together. If you want the file to be shown as a separate Entry, do not provide this field. Note that this field will not be displayd in the UI, as it is only used to determine the grouping.",
                     "examples": [
                         "inspection-oslo-14.10-2022",
                         "contract-1896373"
