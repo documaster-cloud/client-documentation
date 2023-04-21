@@ -91,7 +91,7 @@
                             "description": "Title of the tag",
                             "examples": [
                                 "Santa Claus",
-                                "Contact",
+                                "Contract",
                                 "Oslo"
                             ],
                             "minLength": 1
