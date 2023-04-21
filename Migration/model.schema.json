@@ -13,7 +13,6 @@
                 "Customer Contracts",
                 "Personnel Files"
             ],
-            "additionalProperties": false,
             "minLength": 1
         },
         "document": {
