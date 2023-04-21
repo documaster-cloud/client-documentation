@@ -1,64 +1,99 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "$id": "https://migration.documaster.cloud/model.schema.json",
-    "description": "Describes how a single file should be added to Documaster",
+    "description": "Describes how a single file should be added to Documaster. The main entities used to describe the structure in Documaster is Sections, Entries and Documents. Sections contains Entries and Entries contains Documents.",
     "type": "object",
     "additionalProperties": false,
     "required": ["section"],
     "properties": {
-        "file_datetime": {
-            "type": "string",
-            "format": "date-time",
-            "description": "If given, replaces the default **createdDate** field of the document version."
-        },
         "section": {
             "type": "string",
-            "description": "Title of the section where the document should be added.",
+            "description": "Title of the Section where your file should be uploaded.",
+            "examples": [
+                "Customer Contracts",
+                "Personnel Files"
+            ],
+            "additionalProperties": false,
             "minLength": 1
         },
         "document": {
             "type": "object",
+            "description": "Optional description of the Document object, which is the object that will be connected to your source file and provide previews in the UI.",
             "additionalProperties": false,
-            "required": ["title", "namespace"],
             "properties": {
                 "title": {
                     "type": "string",
+                    "description": "Specify a title for the Document. This is optional and will default to the name of the file (without the extension) if not provided. This field is displayed in the main view, next to the preview of your file.",
+                    "examples": [
+                        "Image 124",
+                        "Attachment",
+                        "Email Message"
+                    ],
                     "minLength": 1
                 },
-                "namespace": {
+                "createdDate": {
                     "type": "string",
-                    "minLength": 1
+                    "format": "date-time",
+                    "description": "If given, replaces the default **createdDate** field of the Document. This is optional, and will default to current date if not provided. The field is displayed when opening a Document in the UI.",
+                    "examples": [
+                        "2019-08-24T14:15:22Z"
+                    ]
+
                 }
             }
         },
         "entry": {
             "type": "object",
+            "description": "Optional description of the Entry object. An Entry holds one or more Documents and is displayed as a list or a grid in the main Documaster view.",
             "additionalProperties": false,
-            "required": ["date", "namespace"],
             "properties": {
-                "date": {
+                "createdDate": {
                     "type": "string",
-                    "format": "date",
-                    "description": "If given, replaces the default **createdDate** field of the entry."
+                    "format": "date-time",
+                    "description": "Specify a **createdDate** for the entry. This is optional and will default to current date if not provided. Note that you will be able to sort by this field in the main Documaster view.",
+                    "examples": [
+                        "2019-08-24T14:15:22Z"
+                    ]
+                },
+                "title": {
+                    "type": "string",
+                    "description": "Specify a title for the Entry. This is optional and will default to no title if not provided. Note that you will be able to sort by this field in the main Documaster view.",
+                    "examples": [
+                        "Inspection Photos",
+                        "Board Meeting"
+                    ],
+                    "minLength": 1
                 },
                 "namespace": {
                     "type": "string",
                     "minLength": 1,
-                    "description": "Used to create multiple Entries with the same title, e.g. when using empty titles for all entries."
+                    "description": "If given, the namespace determines how documents should be grouped (one group will be displayed in a single Entry). Files with the same 'entry.namespace' and 'section' will be grouped together. If you want the file to be shown as a separate Entry, do not provide this field. Note that this field will not be displayd in the UI, as it is only used to determine the grouping.",
+                    "examples": [
+                        "inspection-oslo-14.10-2022",
+                        "contract-1896373"
+                    ]
                 }
             }
         },
         "classification_tags": {
             "type": "object",
+            "description": "Describes what tags should be applied to the Entry and how these tags should be grouped.",
             "additionalProperties": {
                 "type": "array",
                 "uniqueItems": true,
                 "items": {
                     "type":"object",
                     "required": ["title"],
+                    "description": "Describes what tags should be applied to the Entry.",
                     "properties":{
                         "title": {
                             "type": "string",
+                            "description": "Title of the tag",
+                            "examples": [
+                                "Santa Claus",
+                                "Contact",
+                                "Oslo"
+                            ],
                             "minLength": 1
                         },
                         "entry_attributes": {
@@ -95,7 +130,7 @@
                                         "if": {
                                             "properties": { "type": { "enum": ["Date", "DateList"] }}
                                         },
-                                        "then": { 
+                                        "then": {
                                             "properties": { "value": { "format": "date" }}
                                         }
                                     },
