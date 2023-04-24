@@ -1,13 +1,13 @@
 {
     "section": "Section name",
-    "file_datetime": "2019-08-24T14:15:22Z",
     "document": {
-        "title": "filename without suffix and underscores",
-        "namespace": "original_filename.pdf"
+        "title": "Contract.pdf",
+        "createdDate": "2019-08-24T14:15:22Z"
     },
     "entry": {
-        "date": "2023-01-24",
-        "namespace": "pdf group"
+        "title": "Customer meeting",
+        "createdDate": "2019-08-24T14:15:22Z",
+        "namespace": "meeting-1234-group"
     },
     "classification_tags": {
         "Customer": [

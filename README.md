@@ -11,7 +11,7 @@ This repository contains relevant documentation for Documaster's customers. The 
 
 
 ### Migrating files to Documaster
-[➡️ Specifying how your files should be migrated to Documaster](Migration/README.md)
+[➡️ Specifying how your files should be migrated to Documaster](./Migration)
 
 ### Troubleshooting
 
